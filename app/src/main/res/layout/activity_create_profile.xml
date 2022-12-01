@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="viewModel"
+            type="com.radionix.doorlock.home.MainViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".profile.CreateProfileActivity">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg1"
+            android:alpha="0.5"
+            />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            >
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/create"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@string/user_info"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="@dimen/_20sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp"
+                android:hint="Enter Username"
+                android:paddingStart="@dimen/_10sdp"
+                android:inputType="text"
+                android:text="@={viewModel.name}"
+                android:background="@drawable/bg_text"
+                app:layout_constraintTop_toBottomOf="@id/create"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/emailId"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp"
+                android:hint="Enter Email Address"
+                android:paddingStart="@dimen/_10sdp"
+                android:inputType="textEmailAddress"
+                android:text="@={viewModel.email}"
+                android:background="@drawable/bg_text"
+                app:layout_constraintTop_toBottomOf="@id/username"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/mobileNo"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp"
+                android:hint="Enter Mobile Number"
+                android:paddingStart="@dimen/_10sdp"
+                android:inputType="number"
+                android:text="@={viewModel.mobile}"
+                android:background="@drawable/bg_text"
+                app:layout_constraintTop_toBottomOf="@id/emailId"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/addProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_30sdp"
+                android:text="@string/save"
+                android:onClick="@{(v)->viewModel.signup(v)}"
+                android:textColor="@color/white"
+                android:textAllCaps="true"
+                android:paddingStart="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_5sdp"
+                android:background="@drawable/bg_button"
+                android:layout_marginTop="@dimen/_30sdp"
+                app:layout_constraintTop_toBottomOf="@id/mobileNo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:indeterminateTint="@color/ap_color"
+                android:layout_marginTop="@dimen/_30sdp"
+                app:layout_constraintTop_toBottomOf="@id/mobileNo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_25sdp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14sdp"
+            android:visibility="gone"
+            android:onClick="@{(v)->viewModel.login(v)}"
+            android:text="@string/existing_user_login_here"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

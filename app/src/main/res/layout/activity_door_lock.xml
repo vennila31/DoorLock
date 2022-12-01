@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.radionix.doorlock.home.MainViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".product.DoorLockActivity">
+
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            >
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/ap_color"
+                app:titleTextColor="@color/white"
+            />
+
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_view"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent=".6"
+            />
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_16sdp"
+            android:visibility="invisible"
+            android:src="@drawable/ic_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appBar"
+            />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/dev_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/back"
+            app:layout_constraintTop_toBottomOf="@id/appBar"
+            android:text="Main door"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_24sdp"
+            android:textStyle="bold"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/wifiLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/back"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:text="Wifi signal"
+            android:textStyle="bold"
+            android:textSize="@dimen/_12sdp"
+            android:textColor="@color/white"
+            />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/wifi"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_30sdp"
+            app:tint="@color/white"
+            android:layout_marginTop="@dimen/_5sdp"
+            app:layout_constraintTop_toBottomOf="@id/wifiLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:src="@drawable/zero_signal"
+            />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/lock"
+            android:rotation="30"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:backgroundTint="@color/ap_color"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dev_name"
+            app:layout_constraintBottom_toBottomOf="@id/view"
+            />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/lock_img"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:src="@drawable/ic_minus_red"
+            android:layout_marginTop="@dimen/_135sdp"
+            android:layout_marginStart="@dimen/_2sdp"
+            app:layout_constraintStart_toStartOf="@id/img"
+            app:layout_constraintEnd_toEndOf="@id/img"
+            app:layout_constraintTop_toTopOf="@id/img"
+            app:layout_constraintBottom_toBottomOf="@id/img"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/lock_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+
+            android:layout_marginBottom="@dimen/_16sdp"
+            android:text="@string/door_unlocked"
+            android:textColor="@color/red"
+            android:textSize="@dimen/_20sdp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+
+            app:layout_constraintTop_toBottomOf="@id/img" />
+
+
+        <androidx.appcompat.widget.AppCompatToggleButton
+            android:id="@+id/lock_btn"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_70sdp"
+            android:background="@drawable/bg_status"
+            android:textOff=""
+            android:textOn=""
+            android:layout_marginTop="@dimen/_10sdp"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view" />
+
+
+        <androidx.appcompat.widget.AppCompatToggleButton
+            android:id="@+id/sos"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:textOff="OFF"
+            android:textOn="ON"
+            android:layout_marginEnd="@dimen/_20sdp"
+            app:layout_constraintEnd_toStartOf="@id/vib"
+            android:textColor="@color/black"
+            android:background="@drawable/bg_btn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lock_btn"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/sosLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SOS"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_13sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            app:layout_constraintStart_toStartOf="@id/sos"
+            app:layout_constraintTop_toBottomOf="@id/sos"
+            app:layout_constraintEnd_toEndOf="@id/sos"
+            />
+
+        <androidx.appcompat.widget.AppCompatToggleButton
+            android:id="@+id/vib"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:textOff="OFF"
+            android:textOn="ON"
+            android:layout_marginStart="@dimen/_20sdp"
+            app:layout_constraintStart_toEndOf="@id/sos"
+            android:textColor="@color/black"
+            android:background="@drawable/bg_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lock_btn"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/vibLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Vibration"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_13sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            app:layout_constraintStart_toStartOf="@id/vib"
+            app:layout_constraintTop_toBottomOf="@id/vib"
+            app:layout_constraintEnd_toEndOf="@id/vib"
+            />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

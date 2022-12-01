@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="data"
+            type="com.radionix.doorlock.data.Devices" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/device_name_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/device_name"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp"
+            android:layout_margin="@dimen/_10sdp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/device_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{data.name}"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="@dimen/_14sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            app:layout_constraintTop_toTopOf="@id/device_name_label"
+            app:layout_constraintBottom_toBottomOf="@id/device_name_label"
+
+            app:layout_constraintStart_toEndOf="@id/device_name_label"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/device_code_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/device_code"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp"
+            android:layout_margin="@dimen/_10sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/device_name_label"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/device_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{data.id}"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14sdp"
+            android:textStyle="bold"
+            android:layout_marginStart="@dimen/_10sdp"
+            app:layout_constraintTop_toTopOf="@id/device_code_label"
+            app:layout_constraintStart_toEndOf="@id/device_code_label"
+            app:layout_constraintBottom_toBottomOf="@id/device_code_label"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
