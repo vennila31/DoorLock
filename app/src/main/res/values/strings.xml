@@ -13,10 +13,11 @@
     <string name="can_t_scan">Can\'t Scan? Enter product code here</string>
     <string name="not_connected_to_internet">Not Connected to Internet</string>
     <string name="next">Next</string>
+    <string name="sign_in">Sign In</string>
     <string name="sign_up">Sign Up</string>
     <string name="login">Login</string>
-    <string name="existing_user_login_here">Existing user? Login here</string>
-    <string name="new_user_signup_here">New user? Signup here</string>
+    <string name="existing_user_login_here">Existing user? <u>Login here</u></string>
+    <string name="new_user_signup_here">New user? <u>Signup here</u></string>
     <string name="user_info">User Info</string>
     <string name="save">Save</string>
     <string name="door_unlocked">Door  Locked</string>
@@ -43,4 +44,11 @@
     <string name="device_name">Device name :</string>
     <string name="device_code">Device code :</string>
     <string name="change_pattern">Change pattern</string>
+    <string name="verify_otp">Verify OTP</string>
+    <string name="tag">Didn\'t receive otp? Regenerate here</string>
+    <string name="regenerate">Regenerate</string>
+    <string name="send_otp">Send OTP</string>
+    <string name="enter_username">Enter Username</string>
+    <string name="enter_email_address">Enter Email Address</string>
+    <string name="enter_mobile_number">Enter Mobile Number</string>
 </resources>

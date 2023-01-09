@@ -109,16 +109,10 @@ class DeviceSettingsActivity  : AppCompatActivity() {
                 var ssidVal = ""
                 var pass = ""
 
-                if(data.child("relay").value != null)
+                if(data.child("status").value != null)
                 {
-                    if(data.child("relay").value.toString() == "")
-                    {
-                        doorStatus.text = "Locked"
-                    }
-                    else
-                    {
-                        doorStatus.text = "Unlocked"
-                    }
+                    doorStatus.text = data.child("status").value.toString()
+
                 }
 
                 if(data.child("ssid").value != null)

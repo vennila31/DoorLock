@@ -7,8 +7,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-
-
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -25,9 +24,17 @@
         android:theme="@style/Theme.DoorLock"
         tools:targetApi="31">
         <activity
-            android:name=".product.DeviceSettingsActivity"
+            android:name=".profile.OtpActivity"
             android:theme="@style/Theme.DoorLock.NoActionBar"
             android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".product.DeviceSettingsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.DoorLock.NoActionBar">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -143,13 +150,21 @@
                 android:value="" />
         </activity>
 
+        <receiver
+            android:name=".profile.OtpReceiver"
+            android:exported="true"
+            android:permission="android.permission.BROADCAST_SMS"
+            tools:ignore="Instantiatable,IntentFilterExportedReceiver">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
+
+
         <service
             android:name=".service.MyService"
             android:enabled="true"
-            android:exported="true">
-
-        </service>
-
+            android:exported="true"/>
     </application>
 
 </manifest>

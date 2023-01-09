@@ -53,14 +53,16 @@ class DoorLockActivity : AppCompatActivity() {
                 binding.lockStatus.text = resources.getText(R.string.door_locked)
                 binding.lockStatus.setTextColor(resources.getColor(R.color.green))
                 binding.lockImg.setImageResource(R.drawable.ic_minus_green)
-                databaseReference.child(devId).child("relay").setValue("*1516#")
+                databaseReference.child(devId).child("status").setValue("Unlocked")
+
                 val handler = Handler()
                 handler.postDelayed({
                     binding.lockStatus.text = resources.getText(R.string.door_unlocked)
                     binding.lockStatus.setTextColor(resources.getColor(R.color.red))
                     binding.lockImg.setImageResource(R.drawable.ic_minus_red)
                     binding.lockBtn.isChecked = false
-                }, 3000)
+                    databaseReference.child(devId).child("status").setValue("Locked")
+                }, 8000)
 
 
 
