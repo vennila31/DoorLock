@@ -1,18 +1,21 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.DoorLock" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.DoorLock" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-
+        <item name="colorPrimary">@color/ap_color</item>
+        <item name="colorPrimaryVariant">@color/ap_color</item>
+        <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/ap_color</item>
         <item name="colorSecondaryVariant">@color/ap_color</item>
         <item name="colorOnSecondary">@color/black</item>
+        <item name="android:textColorSecondary">@color/white</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/ap_color</item>
+        <item name="android:statusBarColor" > @color/bg1</item>
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.DoorLock.NoActionBar">
+   <!-- <style name="Theme.DoorLock.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
@@ -21,6 +24,6 @@
     <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
         <item name="spinBars">true</item>
         <item name="color">@color/black</item>
-    </style>
+    </style>-->
 
 </resources>

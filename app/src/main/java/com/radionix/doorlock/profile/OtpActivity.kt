@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
@@ -21,6 +22,7 @@ import com.radionix.doorlock.databinding.ActivityOtpBinding
 import com.radionix.doorlock.helper.AppController
 import com.radionix.doorlock.helper.AuthListener
 import com.radionix.doorlock.home.MainViewModel
+import java.util.concurrent.TimeUnit
 
 class OtpActivity : AppCompatActivity() , AuthListener {
 
@@ -30,6 +32,8 @@ class OtpActivity : AppCompatActivity() , AuthListener {
     var verificationId : String? = ""
     var emailStr : String? = ""
     var usernameStr : String? = ""
+    var passStr : String? = ""
+    var uid : String? = ""
     lateinit var appController: AppController
 
     var phoneNumber:String? = ""
@@ -59,7 +63,9 @@ class OtpActivity : AppCompatActivity() , AuthListener {
         verificationId = intent.getStringExtra("verificationId")
         emailStr = intent.getStringExtra("email")
         usernameStr = intent.getStringExtra("username")
+        passStr = intent.getStringExtra("password")
         reqCode = intent.getStringExtra("reqCode").toString()
+        uid = intent.getStringExtra("uid")
 
 
         /** auto detect otp **/
@@ -69,6 +75,11 @@ class OtpActivity : AppCompatActivity() , AuthListener {
         }else{
             requestPermission()
             OtpReceiver.setEditText(binding.otpView)
+        }
+
+        binding.regenOtp.setOnClickListener {
+            viewModel.startTime()
+            sendOtp()
         }
 
 
@@ -83,7 +94,6 @@ class OtpActivity : AppCompatActivity() , AuthListener {
 
                     val phoneAuthCredential : PhoneAuthCredential = PhoneAuthProvider.getCredential(
                         verificationId!!,otp.toString()
-
                     )
 
                     FirebaseAuth.getInstance().signInWithCredential(phoneAuthCredential)
@@ -93,7 +103,7 @@ class OtpActivity : AppCompatActivity() , AuthListener {
                             binding.verify.visibility = View.VISIBLE
                             if(it.isSuccessful){
 
-                                viewModel.signup(this, emailStr!!,phoneNumber!!, usernameStr!!)
+                                viewModel.signup(this, emailStr!!,phoneNumber!!, usernameStr!!,passStr!!,uid!!)
 
                             }else{
                                 Toast.makeText(this,"Invalid OTP", Toast.LENGTH_SHORT).show()
@@ -127,17 +137,46 @@ class OtpActivity : AppCompatActivity() , AuthListener {
 
     }
 
+    private fun sendOtp() {
+        PhoneAuthProvider.getInstance().verifyPhoneNumber(
+            "+91${phoneNumber!!.trim()}",
+            60,
+            TimeUnit.SECONDS,
+            this,
+            object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+                override fun onVerificationCompleted(p0: PhoneAuthCredential) {
+
+                }
+
+                override fun onVerificationFailed(p0: FirebaseException) {
+                    Toast.makeText(this@OtpActivity,"Failed to send OTP , check your number",Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onCodeSent(
+                    verificationId: String,
+                    p1: PhoneAuthProvider.ForceResendingToken
+                ) {
+                    Toast.makeText(this@OtpActivity,"OTP sent successfully..",Toast.LENGTH_SHORT).show()
+
+
+                }
+
+
+            }
+        )
+    }
+
 
     override fun onStarted() {
 
-        binding.verify.visibility = View.GONE
-        binding.progressBar.visibility = View.VISIBLE
+        binding.time.visibility = View.VISIBLE
+        binding.regenOtp.isEnabled = false
 
     }
 
     override fun onSuccess(message: String) {
 
-        binding.verify.visibility = View.VISIBLE
+      /*  binding.verify.visibility = View.VISIBLE
         binding.progressBar.visibility = View.GONE
 
         Toast.makeText(
@@ -145,15 +184,22 @@ class OtpActivity : AppCompatActivity() , AuthListener {
             Toast.LENGTH_SHORT
         ).show()
 
-
+*/
     }
 
     override fun onFailure(message: String) {
-        binding.verify.visibility = View.VISIBLE
-        binding.progressBar.visibility = View.GONE
-        Toast.makeText(
+        if(message == "OTP")
+        {
+            binding.time.visibility = View.GONE
+            binding.regenOtp.isEnabled = true
+            binding.regenOtp.background = resources.getDrawable(R.drawable.bg_button)
+        }else
+        {
+            binding.time.text = message
+        }
+     /*   Toast.makeText(
             this, message,
             Toast.LENGTH_SHORT
-        ).show()
+        ).show()*/
     }
 }

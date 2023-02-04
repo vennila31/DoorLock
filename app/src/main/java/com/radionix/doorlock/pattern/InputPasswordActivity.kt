@@ -44,7 +44,8 @@ class InputPasswordActivity : AppCompatActivity() {
                 if (password == PatternLockUtils.patternToString(binding.patternLockView, pattern)) {
                     if(reqCode == 100)
                     {
-                        val intent = Intent(applicationContext, CreatePasswordActivity::class.java)
+                        val intent = Intent(applicationContext, ForgetPasswordActivity::class.java)
+                            .putExtra("reqCode",100)
                         startActivity(intent)
                         finish()
                     }else{
@@ -64,8 +65,8 @@ class InputPasswordActivity : AppCompatActivity() {
         })
 
         binding.forgotPass.setOnClickListener {
-            startActivity(Intent(this,CreateProfileActivity::class.java)
-                .putExtra("reqCode",101))
+            startActivity(Intent(this,ForgetPasswordActivity::class.java)
+                .putExtra("reqCode",100))
         }
 
     }

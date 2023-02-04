@@ -5,10 +5,12 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.media.RingtoneManager
+import android.net.Uri
 import android.os.Build
 import android.os.IBinder
+import android.os.PowerManager
 import androidx.core.app.NotificationCompat
-import androidx.core.content.ContextCompat
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -17,7 +19,6 @@ import com.radionix.doorlock.R
 import com.radionix.doorlock.helper.AppController
 import com.radionix.doorlock.home.MainActivity
 
-
 class MyService : Service() {
 
     lateinit var notificationChannel: NotificationChannel
@@ -25,28 +26,49 @@ class MyService : Service() {
     lateinit var builder: Notification.Builder
     private val channelId = "12345"
 
+    private var wakeLock: PowerManager.WakeLock? = null
+
+    override fun onCreate() {
+        super.onCreate()
+    }
+
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-//        onTaskRemoved(intent)
-
-        alert()
-
         val input = intent!!.getStringExtra("inputExtra")
-        createNotificationChannel()
-
         val notificationIntent = Intent(this, MainActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(
             this,
             0, notificationIntent,  PendingIntent.FLAG_IMMUTABLE
         )
-        val notification: Notification = NotificationCompat.Builder(this, "ForegroundServiceChannel")
-            .setContentTitle("Skelta is running")
+
+        val notification: Notification = NotificationCompat.Builder(this, MyApp.CHANNEL_ID)
+            .setContentTitle("Skelta")
             .setContentText(input)
-            .setVibrate(null)
-            .setSmallIcon(R.mipmap.ic_app_icon)
+            .setSmallIcon(R.mipmap.ic_skelta)
             .setContentIntent(pendingIntent)
+            .setPriority(Notification.PRIORITY_HIGH)
             .build()
 
+        val mNotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                MyApp.CHANNEL_ID,
+                MyApp.CHANNEL_NAME,
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
+            mNotificationManager.createNotificationChannel(channel)
+            NotificationCompat.Builder(this, MyApp.CHANNEL_ID)
+        }
         startForeground(1, notification)
+
+        // we need this lock so our service gets not affected by Doze Mode
+/*        wakeLock =
+            (getSystemService(Context.POWER_SERVICE) as PowerManager).run {
+                newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "EndlessService::lock").apply {
+                    acquire(10*60*1000L *//*10 minutes*//*)
+                }
+            }*/
+
+        alert()
 
         return START_STICKY
     }
@@ -56,7 +78,7 @@ class MyService : Service() {
          val appController = AppController(this)
          val databaseReference = FirebaseDatabase.getInstance().getReference("")
 
-        databaseReference.child("userData").child(appController.getUsername()).addValueEventListener(object :
+        databaseReference.child("userData").child(appController.getUid()).child(appController.getUsername()).addValueEventListener(object :
             ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
 
@@ -81,26 +103,49 @@ class MyService : Service() {
         databaseReference.child(devId).addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
 
-                if(snapshot.child("r-alert").value != null && snapshot.child("v-alert").value != null)
-                {
-                    val rAlert = snapshot.child("r-alert").value.toString().toInt()
-                    val vAlert = snapshot.child("v-alert").value.toString().toInt()
+                var rAlert = 0
+                var vAlert = 0
+                var sosAlert = 0
+                if(snapshot.child("r-alert").value != null ){
+                    rAlert = snapshot.child("r-alert").value.toString().toInt()
+                }
+                if(snapshot.child("v-alert").value != null){
+                    vAlert = snapshot.child("v-alert").value.toString().toInt()
+                }
+
+                if(snapshot.child("s-alert").value != null){
+                    sosAlert = snapshot.child("s-alert").value.toString().toInt()
+                }
 
                     if(rAlert == 1 && vAlert == 1)
                     {
+                        val rawPathUri: Uri = Uri.parse("android.resource://" + packageName + "/" + R.raw.sound1);
+                        val r = RingtoneManager.getRingtone(applicationContext, rawPathUri)
+                        r.play()
                         notify("Vibration Detected and Contact sensor broken" , devName)
 
                     }else if(rAlert == 1){
-
+                        val rawPathUri: Uri = Uri.parse("android.resource://" + packageName + "/" + R.raw.sound2);
+                        val r = RingtoneManager.getRingtone(applicationContext, rawPathUri)
+                        r.play()
                         notify("Contact sensor broken",devName)
 
                     }else if(vAlert == 1)
                     {
+                        val rawPathUri: Uri = Uri.parse("android.resource://" + packageName + "/" + R.raw.sound1);
+                        val r = RingtoneManager.getRingtone(applicationContext, rawPathUri)
+                        r.play()
                         notify("Vibration Detected",devName)
+                    }else if(sosAlert == 1)
+                    {
+                        val rawPathUri: Uri = Uri.parse("android.resource://" + packageName + "/" + R.raw.sound1);
+                        val r = RingtoneManager.getRingtone(applicationContext, rawPathUri)
+                        r.play()
+                        notify("SOS Alert",devName)
                     }
 
 
-                }
+
 
 
 
@@ -118,6 +163,7 @@ class MyService : Service() {
 
     private fun notify(msg : String , msg2 : String)
     {
+
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -135,49 +181,40 @@ class MyService : Service() {
             notificationManager.createNotificationChannel(notificationChannel)
             builder = Notification.Builder(this, channelId).setContentTitle(msg)
                 .setContentText("Kindly check your $msg2")
-                .setSmallIcon(R.mipmap.ic_app_icon).setLargeIcon(
-                    BitmapFactory.decodeResource(this.resources, R.mipmap.ic_app_icon)
+                .setSmallIcon(R.drawable.ic_warning).setLargeIcon(
+                    BitmapFactory.decodeResource(this.resources, R.drawable.ic_warning)
                 ).setContentIntent(pendingIntent)
+                .setSound(Uri.parse("android.resource://"
+                    + applicationContext.packageName + "/"
+                    + R.raw.sound1))
+                .setColor(resources.getColor(R.color.red))
+
 
             notificationManager.notify(12345, builder.build())
 
         } else {
             val builder: NotificationCompat.Builder = NotificationCompat.Builder(this)
-                .setSmallIcon(R.mipmap.ic_app_icon)
+                .setSmallIcon(R.drawable.ic_warning)
+                .setColor(resources.getColor(R.color.red))
                 .setContentTitle(msg)
                 .setContentText("Kindly check your $msg2")
                 .setAutoCancel(true)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setSound(Uri.parse("android.resource://"
+                        + applicationContext.packageName + "/"
+                        + R.raw.sound1))
 
 
             val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             manager.notify(0, builder.build())
-
         }
     }
 
-    private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val serviceChannel = NotificationChannel(
-                "ForegroundServiceChannel",
-                "Foreground Service Channel",
-                NotificationManager.IMPORTANCE_LOW
-            )
-            val manager = getSystemService(
-                NotificationManager::class.java
-            )
-            manager.createNotificationChannel(serviceChannel)
-        }
-    }
 
-    override fun onBind(intent: Intent?): IBinder {
-        throw UnsupportedOperationException("Not yet implemented")
+    override fun onBind(intent: Intent?): IBinder? {
+        return null
     }
-
-    override fun onTaskRemoved(rootIntent: Intent?) {
-        val serviceIntent = Intent(this, MyService::class.java)
-       serviceIntent.putExtra("inputExtra", "Tap for more information or to stop background")
-       ContextCompat.startForegroundService(this, serviceIntent)
-        super.onTaskRemoved(rootIntent)
+    override fun onDestroy() {
+        super.onDestroy()
     }
 }

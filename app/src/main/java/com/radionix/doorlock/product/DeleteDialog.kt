@@ -33,7 +33,7 @@ class DeleteDialog(var device : String) : DialogFragment()
 
             if(checkBox.isChecked){
 
-                databaseReference.child("userData").child(appController.getUsername()).child("deviceList")
+                databaseReference.child("userData").child(appController.getUid()).child(appController.getUsername()).child("deviceList")
                     .child(device).removeValue()
                 startActivity(Intent(context, MainActivity::class.java))
             }

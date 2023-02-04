@@ -18,6 +18,7 @@ import com.radionix.doorlock.home.MainActivity
 import com.radionix.doorlock.R
 import com.radionix.doorlock.databinding.ActivityScannerBinding
 import com.radionix.doorlock.helper.AppController
+import com.radionix.doorlock.profile.CreateProfileActivity
 
 class ScannerActivity : AppCompatActivity() {
     private lateinit var codeScanner : CodeScanner
@@ -81,7 +82,7 @@ class ScannerActivity : AppCompatActivity() {
     private fun checkDevice(device : String) {
         if(device == "Rdx2702"){
             appController.putIsOkProduct(true)
-            startActivity(Intent(this@ScannerActivity, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+            startActivity(Intent(this@ScannerActivity, CreateProfileActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
             finish()
         }else{
             Toast.makeText(

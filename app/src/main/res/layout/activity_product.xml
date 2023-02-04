@@ -12,59 +12,60 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/bg1"
         tools:context=".product.ProductActivity">
-
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/bg1"
-            android:alpha="0.5"
-            />
 
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/welcome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/welcome"
+            android:text="Skelta Security Systems"
             android:visibility="visible"
             android:textStyle="bold"
-            android:textColor="@color/black"
+            android:fontFamily="@font/alata"
+            android:textColor="@color/btncolor"
             android:layout_margin="@dimen/_16sdp"
-            android:textSize="@dimen/_16sdp"
+            android:textSize="@dimen/_20sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
-
-      <!--  <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
-            android:src="@mipmap/ic_app_icon"
-            app:layout_constraintBottom_toTopOf="@id/consLayout"
-            app:layout_constraintTop_toBottomOf="@id/welcome"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
--->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/consLayout"
-            android:layout_width="match_parent"
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/endText"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            app:layout_constraintTop_toTopOf="parent"
+            android:text="Powered By \n Radionix design gateways"
+            android:gravity="center"
+            android:visibility="visible"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:layout_margin="@dimen/_16sdp"
+            android:textSize="@dimen/_12sdp"
+            android:fontFamily="@font/alata"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"/>
+
+
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/check_product"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_20sdp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_16sdp"
+                android:fontFamily="@font/alata"
                 android:layout_margin="@dimen/_20sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -75,7 +76,7 @@
                 android:layout_width="@dimen/_100sdp"
                 android:layout_height="@dimen/_100sdp"
                 android:src="@drawable/ic_qr_code"
-                android:tint="@color/black"
+                android:tint="@color/editText"
                 android:onClick="@{(v) -> viewModel.scan(v)}"
                 app:layout_constraintTop_toBottomOf="@id/title"
                 app:layout_constraintStart_toStartOf="parent"
@@ -84,48 +85,39 @@
 
 
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/or"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_margin="@dimen/_20sdp"
+                android:text="@string/or"
+                android:textColor="@color/editText"
+                android:layout_marginTop="@dimen/_20sdp"
+                app:layout_constraintTop_toBottomOf="@id/qr_code"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/qr_code">
-                <TextView
-                    android:id="@+id/or"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/or"
-                    android:textColor="@color/secondary_text"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    />
+                />
 
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/_1sdp"
-                    android:background="@color/secondary_text"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="@dimen/_16sdp"
-                    android:layout_marginEnd="@dimen/_16sdp"
-                    app:layout_constraintEnd_toStartOf="@id/or"
-                    app:layout_constraintTop_toTopOf="@id/or"
-                    app:layout_constraintBottom_toBottomOf="@id/or"/>
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/_1sdp"
-                    android:background="@color/secondary_text"
-                    android:layout_marginEnd="@dimen/_16sdp"
-                    android:layout_marginStart="@dimen/_16sdp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/or"
-                    app:layout_constraintTop_toTopOf="@id/or"
-                    app:layout_constraintBottom_toBottomOf="@id/or"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_1sdp"
+                android:background="@color/editText"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                app:layout_constraintEnd_toStartOf="@id/or"
+                app:layout_constraintTop_toTopOf="@id/or"
+                app:layout_constraintBottom_toBottomOf="@id/or"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_1sdp"
+                android:background="@color/editText"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:layout_marginStart="@dimen/_16sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/or"
+                app:layout_constraintTop_toTopOf="@id/or"
+                app:layout_constraintBottom_toBottomOf="@id/or"/>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             <androidx.appcompat.widget.AppCompatEditText
@@ -135,27 +127,29 @@
                 android:layout_margin="@dimen/_25sdp"
                 android:hint="@string/product_code"
                 android:singleLine="true"
-                android:textColor="@color/ap_color"
+                android:textColor="@color/white"
                 android:padding="@dimen/_8sdp"
+                android:paddingStart="@dimen/_10sdp"
                 android:text="@={viewModel.productName}"
-                android:background="@drawable/bg_edittext"
-                android:backgroundTint="@color/white"
+                android:textColorHint="@color/editText"
+                android:fontFamily="@font/alata"
+                android:background="@drawable/bgnew_editext"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.509"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/constraintLayout" />
+                app:layout_constraintTop_toBottomOf="@id/or"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/check"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/_30sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:text="@string/check"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
+                android:fontFamily="@font/alata"
                 android:onClick="@{(v) -> viewModel.getCheck(v)}"
-                android:background="@drawable/bg_edittext"
-                android:layout_margin="@dimen/_20sdp"
+                android:background="@drawable/bg_button"
                 app:layout_constraintTop_toBottomOf="@id/product_code"
+                android:layout_margin="@dimen/_25sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 />
@@ -164,20 +158,10 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Note : Authorized users only"
-            android:textColor="@color/black"
-            android:layout_margin="@dimen/_10sdp"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:gravity="center"
 
-            android:textSize="@dimen/_12sdp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/consLayout"/>
+
+
+
 
 
 

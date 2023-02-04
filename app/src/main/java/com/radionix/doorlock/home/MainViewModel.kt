@@ -7,16 +7,12 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.os.CountDownTimer
-import android.renderscript.Sampler.Value
 import android.util.Log
 import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseException
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
@@ -36,6 +32,10 @@ class MainViewModel : ViewModel() {
     var name: String? = null
     var mobile: String? = null
     var email: String? = null
+    var password : String? = null
+
+    var forgetEmail : String? = null
+    var forgetPass : String? = null
 
     var authListener: AuthListener? = null
 
@@ -43,21 +43,26 @@ class MainViewModel : ViewModel() {
 
     var productCode : String? = null
     private val databaseReference : DatabaseReference = FirebaseDatabase.getInstance().getReference("")
+    private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
+    private val auth = FirebaseAuth.getInstance()
+
 
     var timeLeftInMilliSeconds: Long = 120000
     var timerText: String = ""
 
 
-    fun signup(view : Context , emailStr : String , mobStr : String , nameStr : String)
+    fun signup(view : Context , emailStr : String , mobStr : String , nameStr : String , passStr : String , uid : String)
     {
         val appController = AppController(view)
-        val data = User(emailStr,mobStr)
+        val data = User(nameStr, emailStr,passStr,mobStr)
         authListener!!.onSuccess("Success")
-        databaseReference.child("userData").child(nameStr).setValue(data)
+        databaseReference.child("userData").child(uid).setValue(data)
+        appController.putUid(uid)
         appController.putUsername(nameStr)
         appController.putMobile(mobStr)
         appController.putEmail(emailStr)
-        Intent(view, AuthenticationActivity::class.java).also {
+        appController.putPass(passStr)
+        Intent(view, CreatePasswordActivity::class.java).also {
             view.startActivity(it)
             val activity = view as Activity
             activity.finish()
@@ -66,73 +71,138 @@ class MainViewModel : ViewModel() {
 
     }
 
+    fun forgetPass(view : View)
+    {
+        val appController = AppController(view.context)
+        if(reqCode == 100){
+            if(forgetEmail.isNullOrEmpty() || forgetPass.isNullOrEmpty()){
+                authListener!!.onFailure("Values should not be empty")
+                return
+            }
+            authListener!!.onStarted()
+
+            if(appController.getEmail() == forgetEmail && appController.getPass() == forgetPass){
+                authListener!!.onSuccess("Success")
+                view.context.startActivity(Intent(view.context, CreatePasswordActivity::class.java))
+                val activity = view.context as Activity
+                activity.finish()
+
+            }else{
+                authListener!!.onFailure("Invalid Credentials")
+            }
+
+
+        }else{
+            if(forgetEmail.isNullOrEmpty()){
+                authListener!!.onFailure("Email id should not be empty")
+                return
+            }
+            authListener!!.onStarted()
+
+            auth.sendPasswordResetEmail(forgetEmail!!)
+                .addOnCompleteListener{task ->
+
+                    if(task.isSuccessful){
+                        authListener!!.onSuccess("We have send you instructions to reset password!")
+
+                    }else{
+                        authListener!!.onFailure("Failed to send.. Try again")
+                    }
+
+                }
+        }
+
+
+
+    }
+
 
     fun sendOtp(view: View)
     {
-        val appController = AppController(view.context)
-        if(email.isNullOrEmpty() || mobile.isNullOrEmpty() || name.isNullOrEmpty() )
+        if(email.isNullOrEmpty() || mobile.isNullOrEmpty() || name.isNullOrEmpty() || password.isNullOrEmpty() )
         {
             authListener!!.onFailure("Please enter all values")
             return
         }
         authListener!!.onStarted()
 
-        if(reqCode == 101)
-        {
+      /*  databaseReference.child("userData").child(name!!).addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
 
-            if(appController.getUsername() == name && appController.getMobile() == mobile && appController.getEmail() == email)
-            {
-                authListener!!.onSuccess("Success")
-                Intent(view.context, CreatePasswordActivity::class.java).also {
-                    view.context.startActivity(it)
-                    val activity = view.context as Activity
-                    activity.finish()
-                }.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    if(snapshot.child("email").value == null)
+                    {
 
-            }else{
-                authListener!!.onFailure("Invalid details")
-            }
-
-        }else{
-            val activity = view.context as Activity
-            PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                "+91${mobile!!.trim()}",
-                60,
-                TimeUnit.SECONDS,
-                activity,
-                object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-                    override fun onVerificationCompleted(p0: PhoneAuthCredential) {
-
-                    }
-
-                    override fun onVerificationFailed(p0: FirebaseException) {
-                        authListener!!.onFailure("Failed to send OTP , check your number")
-                    }
-
-                    override fun onCodeSent(
-                        verificationId: String,
-                        p1: PhoneAuthProvider.ForceResendingToken
-                    ) {
-                        authListener!!.onSuccess("OTP sent successfully..")
-
-                        view.context.startActivity(Intent(view.context,OtpActivity::class.java)
-                            .putExtra("verificationId", verificationId)
-                            .putExtra("number", mobile!!.trim())
-                            .putExtra("username",name)
-                            .putExtra("email",email)
-                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                        )
-                        activity.finish()
-
+                    }else{
+                        authListener!!.onFailure("Username already exists")
+                        return
                     }
 
 
                 }
-            )
-        }
 
+                override fun onCancelled(error: DatabaseError) {
+
+                    authListener!!.onFailure(error.message)
+
+                }
+
+
+            })*/
+
+        firebaseAuth.createUserWithEmailAndPassword(email!!, password!!)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    authListener!!.onSuccess("Signup Success")
+
+                    val activity = view.context as Activity
+                    PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                        "+91${mobile!!.trim()}",
+                        60,
+                        TimeUnit.SECONDS,
+                        activity,
+                        object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+                            override fun onVerificationCompleted(p0: PhoneAuthCredential) {
+
+                            }
+
+                            override fun onVerificationFailed(p0: FirebaseException) {
+                                authListener!!.onFailure("Failed to send OTP , check your number")
+                            }
+
+                            override fun onCodeSent(
+                                verificationId: String,
+                                p1: PhoneAuthProvider.ForceResendingToken
+                            ) {
+                                authListener!!.onSuccess("OTP sent successfully..")
+
+                                view.context.startActivity(Intent(view.context,OtpActivity::class.java)
+                                    .putExtra("verificationId", verificationId)
+                                    .putExtra("number", mobile!!.trim())
+                                    .putExtra("username",name)
+                                    .putExtra("email",email)
+                                    .putExtra("password",password)
+                                    .putExtra("uid", firebaseAuth.currentUser!!.uid)
+                                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                                )
+                                activity.finish()
+
+                            }
+
+
+                        }
+                    )
+
+
+                } else {
+//                    authListener!!.onFailure("Registration Failure")
+                    authListener!!.onFailure(task.exception!!.message.toString())
+                }
+            }
 
     }
+
+
+
 
 
     fun isOnline(c: Context): Boolean {
@@ -154,81 +224,92 @@ class MainViewModel : ViewModel() {
 
     fun login(view : View)
     {
-        val activity = view.context as Activity
-        activity.finish()
-        view.context.startActivity(Intent(view.context,LoginActivity::class.java))
+        view.context.startActivity(Intent(view.context,LoginActivity::class.java)
+            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK))
 
     }
     fun register(view: View)
     {
-        val activity = view.context as Activity
-        activity.finish()
-        view.context.startActivity(Intent(view.context,CreateProfileActivity::class.java))
+        view.context.startActivity(Intent(view.context,CreateProfileActivity::class.java)
+            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK))
     }
     fun signIn(view: View)
     {
         val appController = AppController(view.context)
 
-        if(email.isNullOrEmpty() || mobile.isNullOrEmpty())
+        if(email.isNullOrEmpty() || password.isNullOrEmpty())
         {
-            authListener!!.onFailure("Invalid email or Mobile number")
+            authListener!!.onFailure("Invalid email or Password")
             return
         }
 
         authListener!!.onStarted()
 
 
+        firebaseAuth.signInWithEmailAndPassword(email!!, password!!)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+
+                    authListener!!.onSuccess("Login Success")
+
+                    appController.putEmail(email!!)
+                    appController.putPass(password!!)
+                    appController.putUid(firebaseAuth.currentUser!!.uid)
+
+                    putUserName(view.context)
+
+                    Intent(view.context,CreatePasswordActivity::class.java).also {
+                        view.context.startActivity(it)
+                        val activity = view.context as Activity
+                        activity.finish()
+                    }.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+
+                } else {
+                    authListener!!.onFailure("Invalid credentials")
+                }
+            }
+
+
+
+
+
+
+    }
+
+    private fun putUserName(context: Context)
+    {
+        val appController = AppController(context)
+
         databaseReference.child("userData").addListenerForSingleValueEvent(object :
             ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
-
-                authListener!!.onFailure("Login failed")
 
             }
 
             override fun onDataChange(data : DataSnapshot) {
 
-
-                var isLog = false
-
                 for ( i in data.children){
 
-                    val username = i.child( "mobile").value.toString()
+                    val username = i.child( "email").value.toString()
 
-                    if(mobile == username)
-                    {
-                        isLog = true
-                        authListener!!.onSuccess("Login Success")
-                        appController.putUsername(i.key.toString())
-                        appController.putEmail(email!!)
-                        appController.putMobile(mobile!!)
-                        Intent(view.context,AuthenticationActivity::class.java).also {
-                            view.context.startActivity(it)
-                            val activity = view.context as Activity
-                            activity.finish()
-                        }.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    }else{
-                        isLog = false
+                    if(username == email ){
+
+                        appController.putUsername(i.child("name").value.toString())
+                        appController.putMobile(i.child("mobile").value.toString())
+
 
                     }
 
-
-
                 }
 
-                if(!isLog){
-                    authListener!!.onFailure("Invalid credentials")
-                }
 
             }
 
 
         })
 
-
-
-
     }
+
 
 
     fun startTime() {

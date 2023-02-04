@@ -11,6 +11,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/edit"
         tools:context=".product.DoorLockActivity">
 
 
@@ -18,21 +19,21 @@
             android:id="@+id/appBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            >
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/ap_color"
+                android:background="@color/edit"
                 app:titleTextColor="@color/white"
+                app:subtitleTextAppearance="@font/alata"
             />
 
 
         </com.google.android.material.appbar.AppBarLayout>
 
-
+<!--
         <View
             android:id="@+id/view"
             android:layout_width="match_parent"
@@ -42,7 +43,7 @@
             app:layout_constraintTop_toBottomOf="@id/appBar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_percent=".6"
-            />
+            />-->
 
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -50,7 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_16sdp"
-            android:visibility="invisible"
+            android:visibility="gone"
             android:src="@drawable/ic_back"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/appBar"
@@ -62,10 +63,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="@id/back"
-            app:layout_constraintTop_toBottomOf="@id/appBar"
+            app:layout_constraintTop_toBottomOf="@id/back"
             android:text="Main door"
+            android:fontFamily="@font/alata"
+            android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_5sdp"
-            android:textColor="@color/white"
+            android:textColor="@color/ap_color"
             android:textSize="@dimen/_24sdp"
             android:textStyle="bold"
             />
@@ -74,10 +77,12 @@
             android:id="@+id/wifiLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
             app:layout_constraintTop_toTopOf="@id/back"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="@dimen/_10sdp"
             android:text="Wifi signal"
+            android:fontFamily="@font/alata"
             android:textStyle="bold"
             android:textSize="@dimen/_12sdp"
             android:textColor="@color/white"
@@ -90,8 +95,8 @@
             app:tint="@color/white"
             android:layout_marginTop="@dimen/_5sdp"
             app:layout_constraintTop_toBottomOf="@id/wifiLabel"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="@dimen/_10sdp"
+            app:layout_constraintEnd_toEndOf="@id/wifiLabel"
+            app:layout_constraintStart_toStartOf="@id/wifiLabel"
             android:src="@drawable/zero_signal"
             />
 
@@ -106,7 +111,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/dev_name"
-            app:layout_constraintBottom_toBottomOf="@id/view"
             />
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -130,14 +134,41 @@
 
             android:layout_marginBottom="@dimen/_16sdp"
             android:text="@string/door_unlocked"
-            android:textColor="@color/red"
+            android:textColor="@color/editText"
             android:textSize="@dimen/_20sdp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@id/view"
+            android:fontFamily="@font/alata"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
 
             app:layout_constraintTop_toBottomOf="@id/img" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/timerLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/wifi"
+            app:layout_constraintStart_toStartOf="@id/wifiLabel"
+            app:layout_constraintEnd_toEndOf="@id/wifiLabel"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="Add Timer"
+            android:fontFamily="@font/alata"
+            android:textColor="@color/white"
+            />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add_timer"
+            android:visibility="visible"
+            android:background="@color/edit"
+            android:layout_marginTop="@dimen/_5sdp"
+            app:layout_constraintEnd_toEndOf="@id/timerLabel"
+            app:layout_constraintStart_toStartOf="@id/timerLabel"
+            app:layout_constraintTop_toBottomOf="@id/timerLabel"
+            />
+
 
 
         <androidx.appcompat.widget.AppCompatToggleButton
@@ -151,62 +182,169 @@
             android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/view" />
+            app:layout_constraintTop_toBottomOf="@id/linear" />
 
-
-        <androidx.appcompat.widget.AppCompatToggleButton
-            android:id="@+id/sos"
-            android:layout_width="@dimen/_50sdp"
-            android:layout_height="@dimen/_50sdp"
-            android:textOff="OFF"
-            android:textOn="ON"
-            android:layout_marginEnd="@dimen/_20sdp"
-            app:layout_constraintEnd_toStartOf="@id/vib"
-            android:textColor="@color/black"
-            android:background="@drawable/bg_btn"
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/lock_btn"
-            />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/sosLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="SOS"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_13sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            app:layout_constraintStart_toStartOf="@id/sos"
-            app:layout_constraintTop_toBottomOf="@id/sos"
-            app:layout_constraintEnd_toEndOf="@id/sos"
-            />
-
-        <androidx.appcompat.widget.AppCompatToggleButton
-            android:id="@+id/vib"
-            android:layout_width="@dimen/_50sdp"
-            android:layout_height="@dimen/_50sdp"
-            android:textOff="OFF"
-            android:textOn="ON"
-            android:layout_marginStart="@dimen/_20sdp"
-            app:layout_constraintStart_toEndOf="@id/sos"
-            android:textColor="@color/black"
-            android:background="@drawable/bg_btn"
             app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone"
+            android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@id/lock_btn"
-            />
+            app:layout_constraintBottom_toBottomOf="parent">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/vibLabel"
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/timerValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                tools:text="Timer 09:00 to 08:30"
+                android:fontFamily="@font/alata"
+                android:textSize="@dimen/_14sdp"
+                android:layout_marginStart="@dimen/_10sdp" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/deleteTimer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_delete"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                />
+
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:id="@+id/linear"
+            android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Vibration"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_13sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            app:layout_constraintStart_toStartOf="@id/vib"
-            app:layout_constraintTop_toBottomOf="@id/vib"
-            app:layout_constraintEnd_toEndOf="@id/vib"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/_16sdp"
+            app:layout_constraintTop_toBottomOf="@id/lock_status">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+
+                >
+                <androidx.appcompat.widget.AppCompatToggleButton
+                    android:id="@+id/sos"
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="@dimen/_60sdp"
+                    android:textOff="OFF"
+                    android:textOn="ON"
+                    android:fontFamily="@font/alata"
+                    android:textColor="@drawable/textcolor"
+                    android:background="@drawable/bg_btn"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/sosLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SOS"
+                    android:fontFamily="@font/alata"
+                    android:textColor="@color/ap_color"
+                    android:textSize="@dimen/_13sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:layout_constraintStart_toStartOf="@id/sos"
+                    app:layout_constraintTop_toBottomOf="@id/sos"
+                    app:layout_constraintEnd_toEndOf="@id/sos"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                >
+
+                <androidx.appcompat.widget.AppCompatToggleButton
+                    android:id="@+id/intruderBtn"
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="@dimen/_60sdp"
+                    android:textOff="OFF"
+                    android:textOn="ON"
+                    android:fontFamily="@font/alata"
+                    android:textColor="@drawable/textcolor"
+                    android:background="@drawable/bg_btn"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/intLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Intruder Alert"
+                    android:textColor="@color/ap_color"
+                    android:fontFamily="@font/alata"
+                    android:textSize="@dimen/_13sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:layout_constraintStart_toStartOf="@id/intruderBtn"
+                    app:layout_constraintTop_toBottomOf="@id/intruderBtn"
+                    app:layout_constraintEnd_toEndOf="@id/intruderBtn"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                >
+                <androidx.appcompat.widget.AppCompatToggleButton
+                    android:id="@+id/vib"
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="@dimen/_60sdp"
+                    android:textOff="OFF"
+                    android:textOn="ON"
+                    android:fontFamily="@font/alata"
+                    android:textColor="@drawable/textcolor"
+                    android:background="@drawable/bg_btn"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"                    />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/vibLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Vibration"
+                    android:fontFamily="@font/alata"
+                    android:textColor="@color/ap_color"
+                    android:textSize="@dimen/_13sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:layout_constraintStart_toStartOf="@id/vib"
+                    app:layout_constraintTop_toBottomOf="@id/vib"
+                    app:layout_constraintEnd_toEndOf="@id/vib"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+        </LinearLayout>
+
+
+
+
+
+
 
 
 

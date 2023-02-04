@@ -9,15 +9,18 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/bg1"
+        >
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/device_name_label"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/device_name"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_12sdp"
+            android:fontFamily="@font/alata"
             android:layout_margin="@dimen/_10sdp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -27,9 +30,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{data.name}"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textStyle="bold"
             android:textSize="@dimen/_14sdp"
+            android:fontFamily="@font/alata"
             android:layout_marginStart="@dimen/_5sdp"
             app:layout_constraintTop_toTopOf="@id/device_name_label"
             app:layout_constraintBottom_toBottomOf="@id/device_name_label"
@@ -42,8 +46,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/device_code"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_12sdp"
+            android:fontFamily="@font/alata"
             android:layout_margin="@dimen/_10sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/device_name_label"/>
@@ -53,9 +58,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{data.id}"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/_14sdp"
             android:textStyle="bold"
+            android:fontFamily="@font/alata"
             android:layout_marginStart="@dimen/_10sdp"
             app:layout_constraintTop_toTopOf="@id/device_code_label"
             app:layout_constraintStart_toEndOf="@id/device_code_label"

@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">Skelta</string>
-    <string name="welcome">Welcome User,</string>
+    <string name="welcome">Welcome</string>
     <string name="check_product">QR Scan Product</string>
     <string name="or">OR</string>
     <string name="product_code">Product Code</string>
-    <string name="check">Check</string>
+    <string name="check">Get Started</string>
     <string name="loading">Loading...</string>
     <string name="input_password">Input Password</string>
     <string name="create_password">Create Password</string>
@@ -17,7 +17,7 @@
     <string name="sign_up">Sign Up</string>
     <string name="login">Login</string>
     <string name="existing_user_login_here">Existing user? <u>Login here</u></string>
-    <string name="new_user_signup_here">New user? <u>Signup here</u></string>
+    <string name="new_user_signup_here">Register</string>
     <string name="user_info">User Info</string>
     <string name="save">Save</string>
     <string name="door_unlocked">Door  Locked</string>
@@ -51,4 +51,10 @@
     <string name="enter_username">Enter Username</string>
     <string name="enter_email_address">Enter Email Address</string>
     <string name="enter_mobile_number">Enter Mobile Number</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="forgot">Forgot Password?</string>
+    <string name="send_reset_password_link">Send Reset Password Link</string>
+    <string name="on_timeO">n Time</string>
+    <string name="on_time">On Time</string>
+    <string name="off_time">Off Time</string>
 </resources>

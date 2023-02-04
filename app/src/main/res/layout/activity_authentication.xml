@@ -12,7 +12,7 @@
             android:id="@+id/img"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
-            android:src="@mipmap/ic_app_icon"
+            android:src="@mipmap/ic_skelta"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

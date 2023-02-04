@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.radionix.doorlock.R
+import com.radionix.doorlock.ShutterLockActivity
 import com.radionix.doorlock.databinding.ActivityWebViewBinding
 import com.radionix.doorlock.helper.AppController
 import com.radionix.doorlock.home.MainViewModel
@@ -38,10 +39,7 @@ class WebViewActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         binding.executePendingBindings()
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.title = "Wifi Configuration"
+
 
         progressBar = findViewById(R.id.progressBar)
 
@@ -71,15 +69,25 @@ class WebViewActivity : AppCompatActivity() {
                 val databaseReference: DatabaseReference = FirebaseDatabase.getInstance().getReference("")
 
                 databaseReference.child(deviceName).child("deviceName").setValue("Door Lock")
-                databaseReference.child("userData").child(appController.getUsername())
+                databaseReference.child("userData").child(appController.getUid()).child(appController.getUsername())
                     .child("deviceList")
                     .child(deviceName)
                     .setValue("Main Door")
 
-                startActivity(
-                    Intent(this, DoorLockActivity::class.java)
-                        .putExtra("devId", deviceName)
-                        .putExtra("devName","Main Door"))
+                if(deviceName.contains("RDXSHL"))
+                {
+                    startActivity(
+                        Intent(this, ShutterLockActivity::class.java)
+                            .putExtra("devId", deviceName)
+                            .putExtra("devName","Main Door"))
+                }else{
+                    startActivity(
+                        Intent(this, DoorLockActivity::class.java)
+                            .putExtra("devId", deviceName)
+                            .putExtra("devName","Main Door"))
+                }
+
+
             }
 
         }
@@ -104,10 +112,7 @@ class WebViewActivity : AppCompatActivity() {
         }
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
-    }
+
 
 
 }

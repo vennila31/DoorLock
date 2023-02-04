@@ -2,8 +2,19 @@
 <resources>
     <color name="secondary_text">#CDD3E0</color>
     <color name="black">#FF000000</color>
+    <color name="black1">#DBDFE1</color>
+    <color name="black2">#424447</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="ap_color">#00b1ff</color>
+    <color name="ap_color">#75acf8</color>
     <color name="red">#FA0505</color>
     <color name="green">#3BF843</color>
+
+    <color name="primary">#75acf8</color>
+    <color name="secondary">#75acf8</color>
+
+    <color name="bg1">#101012</color>
+    <color name="btncolor">#75acf8</color>
+    <color name="editText">#535c61</color>
+    <color name="edit">#212439</color>
+    
 </resources>

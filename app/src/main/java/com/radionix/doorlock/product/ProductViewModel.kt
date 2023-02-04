@@ -5,10 +5,12 @@ import android.content.Context
 import android.content.Intent
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import com.radionix.doorlock.helper.AppController
-import com.radionix.doorlock.home.AuthenticationActivity
-import com.radionix.doorlock.profile.CreateProfileActivity
+import com.radionix.doorlock.pattern.CreatePasswordActivity
+import com.radionix.doorlock.pattern.InputPasswordActivity
+import com.radionix.doorlock.profile.LoginActivity
 
 class ProductViewModel : ViewModel()  {
 
@@ -23,18 +25,31 @@ class ProductViewModel : ViewModel()  {
         if (appController.getIsOkProduct()) {
             if(appController.getUsername() == "" || appController.getEmail() == "" || appController.getMobile() == "" )
             {
-                Intent(view, CreateProfileActivity::class.java).also {
+                Intent(view, LoginActivity::class.java).also {
                     view.startActivity(it)
                     val activity = view as Activity
                     activity.finish()
                 }.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             }else
             {
-                Intent(view, AuthenticationActivity::class.java).also {
-                    view.startActivity(it)
+
+                val sharedPreferences = view.getSharedPreferences("Skelta",
+                    AppCompatActivity.MODE_PRIVATE
+                )
+                val password = sharedPreferences.getString("password", "0")
+                if (password == "0") {
+                    val intent = Intent(view, CreatePasswordActivity::class.java)
+                    view.startActivity(intent)
                     val activity = view as Activity
                     activity.finish()
-                }.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                }
+                else {
+                    val intent = Intent(view, InputPasswordActivity::class.java)
+                    view.startActivity(intent)
+                    val activity = view as Activity
+                    activity.finish()
+                }
+
             }
 
         }
@@ -54,7 +69,7 @@ class ProductViewModel : ViewModel()  {
         {
             if(productName!!.contains("Rdx2702",false)){
                 appController.putIsOkProduct(true)
-                Intent(view.context, CreateProfileActivity::class.java).also {
+                Intent(view.context, LoginActivity::class.java).also {
                     view.context.startActivity(it)
                     val activity = view.context as Activity
                     activity.finish()

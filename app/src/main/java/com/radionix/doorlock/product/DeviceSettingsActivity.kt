@@ -15,6 +15,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import com.google.firebase.database.*
 import com.radionix.doorlock.R
 import com.radionix.doorlock.addDevice.WebViewActivity
+import com.radionix.doorlock.helper.AppController
 
 class DeviceSettingsActivity  : AppCompatActivity() {
 
@@ -23,6 +24,9 @@ class DeviceSettingsActivity  : AppCompatActivity() {
 
     lateinit var doorName : AppCompatEditText
     lateinit var doorStatus : AppCompatTextView
+    lateinit var doorLabel1 : AppCompatTextView
+    lateinit var doorLabel : AppCompatTextView
+    lateinit var doorLabel0 : AppCompatTextView
     lateinit var ssid : AppCompatTextView
     lateinit var ip : AppCompatTextView
     lateinit var reset : AppCompatImageView
@@ -33,6 +37,8 @@ class DeviceSettingsActivity  : AppCompatActivity() {
 
     lateinit var save : AppCompatButton
 
+    var reqCode = 0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,8 +47,13 @@ class DeviceSettingsActivity  : AppCompatActivity() {
         deviceName = intent.getStringExtra("devId").toString()
         databaseReference = FirebaseDatabase.getInstance().getReference("")
 
+        reqCode = intent.getIntExtra("reqCode",0)
+
         doorStatus = findViewById(R.id.density_value)
         doorName = findViewById(R.id.tank_value)
+        doorLabel = findViewById(R.id.tank_density)
+        doorLabel0 = findViewById(R.id.info)
+        doorLabel1 = findViewById(R.id.tank_name)
         ssid = findViewById(R.id.ssid)
         ip = findViewById(R.id.ip)
         reset = findViewById(R.id.reset)
@@ -53,6 +64,14 @@ class DeviceSettingsActivity  : AppCompatActivity() {
         save = findViewById(R.id.save)
 
         initializeView()
+
+        if(reqCode == 100)
+        {
+            doorStatus.visibility = View.GONE
+            doorLabel.visibility = View.GONE
+            doorLabel0.text = "Shutter Info"
+            doorLabel1.text = "Shutter Name"
+        }
 
         back.setOnClickListener {
             onBackPressed()
@@ -88,7 +107,10 @@ class DeviceSettingsActivity  : AppCompatActivity() {
 
     private fun saveToServer() {
 
+        val appController = AppController(this)
         databaseReference.child(deviceName).child("deviceName").setValue(doorName.text.toString())
+        databaseReference.child("userData").child(appController.getUid()).child(appController.getUsername())
+            .child("deviceList").child(deviceName).setValue(doorName.text.toString())
         showSuccess()
 
     }
@@ -138,4 +160,5 @@ class DeviceSettingsActivity  : AppCompatActivity() {
 
         })
     }
+
 }

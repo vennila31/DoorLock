@@ -88,6 +88,7 @@ class QRActivity : AppCompatActivity() {
             text.contains("RDX",ignoreCase = true) -> {
                 if(isNetworkAvailable()){
                     checkDeviceServer(text)
+
                 }else{
                     binding.progressBar.visibility = View.GONE
                     binding.submit.visibility = View.VISIBLE
@@ -151,8 +152,11 @@ class QRActivity : AppCompatActivity() {
 
         appController = AppController(this)
 
-        databaseReference.child("userData").child(appController.getUsername()).child("deviceList").addListenerForSingleValueEvent(   object :
-            ValueEventListener {
+        databaseReference.child("userData")
+            .child(appController.getUid())
+            .child(appController.getUsername())
+            .child("deviceList")
+            .addListenerForSingleValueEvent(   object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
                 binding.progressBar.visibility = View.GONE
                 binding.submit.visibility = View.VISIBLE

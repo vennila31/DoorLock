@@ -7,25 +7,48 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
 
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
 
     <application
+        android:name=".service.MyApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_app_icon"
+        android:icon="@mipmap/ic_skelta"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_app_icon_round"
+        android:roundIcon="@mipmap/ic_skelta_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DoorLock"
         tools:targetApi="31">
         <activity
+            android:name=".ShutterLockActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".pattern.ForgetPasswordActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".SignUpActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".profile.OtpActivity"
-            android:theme="@style/Theme.DoorLock.NoActionBar"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -33,112 +56,98 @@
         </activity>
         <activity
             android:name=".product.DeviceSettingsActivity"
-            android:exported="false"
-            android:theme="@style/Theme.DoorLock.NoActionBar">
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".profile.LoginActivity"
-            android:exported="false"
-            android:theme="@style/Theme.DoorLock.NoActionBar">
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".product.DoorLockActivity"
-            android:exported="false"
-            android:theme="@style/Theme.DoorLock.NoActionBar">
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".addDevice.WebViewActivity"
-            android:exported="false"
-            android:theme="@style/Theme.DoorLock.NoActionBar">
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".addDevice.IntroActivity"
-            android:exported="false"
-            android:theme="@style/Theme.DoorLock.NoActionBar">
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".profile.CreateProfileActivity"
-            android:exported="false"
-            android:theme="@style/Theme.DoorLock.NoActionBar">
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".profile.ProfileActivity"
-            android:exported="false"
-            android:theme="@style/Theme.DoorLock.NoActionBar">
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".addDevice.QRActivity"
-            android:exported="false"
-            android:theme="@style/Theme.DoorLock.NoActionBar">
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".home.AuthenticationActivity"
-            android:exported="false"
-            android:theme="@style/Theme.DoorLock.NoActionBar">
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".pattern.InputPasswordActivity"
-            android:exported="false"
-            android:theme="@style/Theme.DoorLock.NoActionBar">
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".pattern.CreatePasswordActivity"
-            android:exported="false"
-            android:theme="@style/Theme.DoorLock.NoActionBar">
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".product.ScannerActivity"
-            android:exported="false"
-            android:theme="@style/Theme.DoorLock.NoActionBar">
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".home.MainActivity"
-            android:exported="false"
-            android:theme="@style/Theme.DoorLock.NoActionBar">
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".product.ProductActivity"
-            android:exported="true"
-            android:theme="@style/Theme.DoorLock.NoActionBar">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -160,11 +169,37 @@
             </intent-filter>
         </receiver>
 
+    <!--    <receiver
+            android:name=".service.MyReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
 
         <service
             android:name=".service.MyService"
             android:enabled="true"
-            android:exported="true"/>
+            android:foregroundServiceType="dataSync"
+            android:exported="true" />-->
+
+        <service
+            android:name=".endlessservice.EndlessService"
+            android:enabled="true"
+            android:exported="false">
+        </service>
+
+        <receiver android:enabled="true" android:name=".endlessservice.StartReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

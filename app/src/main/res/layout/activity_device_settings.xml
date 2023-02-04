@@ -5,10 +5,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg1"
     tools:context=".product.DeviceSettingsActivity">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
 
 
         <View
@@ -31,6 +33,7 @@
             android:layout_marginTop="@dimen/_30sdp"
             android:text="@string/configure_device"
             android:textColor="@color/white"
+            android:fontFamily="@font/alata"
             android:textSize="@dimen/_16sdp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -57,6 +60,7 @@
             android:layout_marginEnd="@dimen/_16sdp"
             app:cardCornerRadius="@dimen/_6sdp"
             app:cardElevation="@dimen/_5sdp"
+            app:cardBackgroundColor="@color/edit"
             app:cardUseCompatPadding="true"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -71,8 +75,9 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_10sdp"
                     android:drawablePadding="@dimen/_8sdp"
+                    android:fontFamily="@font/alata"
                     android:text="@string/door_info"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_12sdp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -93,7 +98,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_10sdp"
                     android:text="@string/door_name"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/alata"
                     android:textSize="@dimen/_12sdp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/view2" />
@@ -107,7 +113,8 @@
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     tools:text="Door Lock"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/alata"
                     android:textSize="@dimen/_14sdp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -123,7 +130,8 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:text="Door Status"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/alata"
                     android:textSize="@dimen/_12sdp"
                     android:visibility="visible"
                     app:layout_constraintStart_toStartOf="parent"
@@ -136,8 +144,9 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_10sdp"
                     tools:text="Unlocked"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_14sdp"
+                    android:fontFamily="@font/alata"
                     android:textStyle="bold"
                     android:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -161,6 +170,7 @@
             android:layout_marginEnd="@dimen/_16sdp"
             app:cardCornerRadius="@dimen/_6sdp"
             app:cardElevation="@dimen/_5sdp"
+            app:cardBackgroundColor="@color/edit"
             app:cardUseCompatPadding="true"
             app:layout_constraintTop_toBottomOf="@id/cardView">
 
@@ -176,7 +186,8 @@
                     android:drawableStart="@drawable/ic_globe_grid"
                     android:drawablePadding="@dimen/_8sdp"
                     android:text="@string/network_settings"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/alata"
                     android:textSize="@dimen/_12sdp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -202,7 +213,8 @@
                     android:textSize="@dimen/_12sdp"
                     app:layout_constraintTop_toBottomOf="@id/view3"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/alata"
                     />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -216,7 +228,8 @@
                     app:layout_constraintStart_toEndOf="@id/ssid_label"
                     app:layout_constraintTop_toTopOf="@id/ssid_label"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/alata"
                     android:textSize="@dimen/_14sdp"
                     android:textStyle="bold"/>
 
@@ -230,7 +243,8 @@
                     android:textSize="@dimen/_12sdp"
                     app:layout_constraintTop_toBottomOf="@id/ssid"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/alata"
                     />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -243,7 +257,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     android:textSize="@dimen/_14sdp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/alata"
                     />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -253,7 +268,8 @@
                     android:layout_margin="@dimen/_16sdp"
                     android:background="@android:color/transparent"
                     android:text="@string/hardware_reset"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/alata"
                     android:textSize="@dimen/_12sdp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/ip" />
@@ -289,7 +305,8 @@
                     android:layout_marginBottom="@dimen/_16sdp"
                     android:background="@android:color/transparent"
                     android:text="@string/change_credentials"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/alata"
                     android:textSize="@dimen/_12sdp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -317,12 +334,14 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/save"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
             android:background="@drawable/bg_button"
             android:text="@string/save"
             android:textAllCaps="false"
+            android:fontFamily="@font/alata"
             android:textColor="@color/white"
             android:layout_marginBottom="@dimen/_10sdp"
             app:layout_constraintTop_toBottomOf="@id/network_card"

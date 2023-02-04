@@ -12,32 +12,140 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".profile.CreateProfileActivity">
+        android:background="@color/bg1"
+        tools:context=".profile.OtpActivity">
 
-
-        <View
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="@color/ap_color"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintHeight_percent=".6"
-            />
-
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/create"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/cardView"
-            android:text="@string/verify_otp"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:textSize="@dimen/_20sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            />
+            app:layout_constraintBottom_toBottomOf="parent">
 
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/create"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@string/verify_otp"
+                android:fontFamily="@font/alata"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="@dimen/_20sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+
+
+            <com.mukesh.OtpView
+                android:id="@+id/otp_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                style="@style/OtpWidget.OtpView"
+                app:OtpItemCount="6"
+                android:visibility="visible"
+                app:OtpItemRadius="@dimen/_5sdp"
+                app:OtpViewType="rectangle"
+                android:textColor="@color/white"
+                app:OtpLineColor="@color/edit"
+                android:layout_marginTop="@dimen/_30sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/create"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:visibility="visible"
+                android:text="@={viewModel.timerText}"
+                android:fontFamily="@font/alata"
+                android:textColor="@color/editText"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/otp_view"
+                tools:text="Time to expire :"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/regen_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:textColor="@color/editText"
+                android:textSize="@dimen/_14sdp"
+                android:fontFamily="@font/alata"
+                android:layout_marginTop="@dimen/_16sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/time"
+                android:text="@string/tag"/>
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/regen_otp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_30sdp"
+                android:layout_gravity="center"
+                android:padding="@dimen/_10sdp"
+                android:fontFamily="@font/alata"
+                android:background="@drawable/bg_text"
+                android:text="@string/regenerate"
+                android:textColor="@color/white"
+                android:textAllCaps="false"
+                app:layout_constraintTop_toBottomOf="@id/regen_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+
+                />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/verify"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Verify"
+                android:textColor="@color/white"
+                android:textAllCaps="false"
+                android:fontFamily="@font/alata"
+                android:layout_marginStart="@dimen/_30sdp"
+                android:layout_marginEnd="@dimen/_30sdp"
+                android:background="@drawable/bg_button"
+                android:layout_marginTop="@dimen/_30sdp"
+                app:layout_constraintTop_toBottomOf="@id/regen_otp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="@dimen/_10sdp"
+                />
+
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:indeterminateTint="@color/ap_color"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                app:layout_constraintTop_toBottomOf="@id/regen_otp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+<!--
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
             android:layout_width="match_parent"
@@ -61,99 +169,6 @@
                 app:layout_constraintBottom_toBottomOf="parent">
 
 
-                <com.mukesh.OtpView
-                    android:id="@+id/otp_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    style="@style/OtpWidget.OtpView"
-                    app:OtpItemCount="6"
-                    android:visibility="visible"
-                    app:OtpItemRadius="@dimen/_9sdp"
-                    app:OtpViewType="rectangle"
-                    android:layout_marginTop="@dimen/_16sdp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_20sdp"
-                    android:visibility="visible"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_14sdp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/otp_view"
-                    tools:text="Time to expire :"/>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/regen_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_14sdp"
-                    android:layout_marginTop="@dimen/_16sdp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/time"
-                    android:text="@string/tag"/>
-
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/regen_otp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_30sdp"
-                    android:layout_gravity="center"
-                    android:padding="@dimen/_10sdp"
-                    android:background="@drawable/bg_edittext"
-                    android:text="@string/regenerate"
-                    android:textColor="@color/black"
-                    android:textAllCaps="false"
-                    app:layout_constraintTop_toBottomOf="@id/regen_text"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-
-                    />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/verify"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/_30sdp"
-                    android:text="Verify"
-                    android:onClick="@{(v)->viewModel.sendOtp(v)}"
-                    android:textColor="@color/white"
-                    android:textAllCaps="false"
-                    android:paddingStart="@dimen/_5sdp"
-                    android:paddingEnd="@dimen/_5sdp"
-                    android:background="@drawable/bg_button"
-                    android:layout_marginTop="@dimen/_30sdp"
-                    app:layout_constraintTop_toBottomOf="@id/regen_otp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginBottom="@dimen/_10sdp"
-                    />
-
-
-                <ProgressBar
-                    android:id="@+id/progress_bar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:indeterminateTint="@color/ap_color"
-                    android:layout_marginTop="@dimen/_30sdp"
-                    android:layout_marginBottom="@dimen/_10sdp"
-                    app:layout_constraintTop_toBottomOf="@id/regen_otp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    />
 
 
 
@@ -162,7 +177,7 @@
 
 
 
-        </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>-->
 
 
 

@@ -4,33 +4,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/background"
+    android:background="@color/bg1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="false">
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            app:titleTextColor="@color/black"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            />
-
-    </com.google.android.material.appbar.AppBarLayout>
-
 
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_10sdp"
-        app:layout_constraintTop_toBottomOf="@id/appBar"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@color/white"
+        android:fontFamily="@font/alata"
         app:layout_constraintEnd_toStartOf="@id/next"
         android:text="Note : If you have done with these Click Next to Proceed"
         />
@@ -43,8 +29,9 @@
         android:text="@string/next"
         android:textColor="@color/white"
         android:textAllCaps="false"
+        android:fontFamily="@font/alata"
         android:layout_margin="@dimen/_10sdp"
-        app:layout_constraintTop_toBottomOf="@id/appBar"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         />
 
@@ -62,8 +49,8 @@
         android:id="@+id/worm_dots_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:dotsColor="@color/ap_color"
-        app:dotsStrokeColor="@color/ap_color"
+        app:dotsColor="@color/white"
+        app:dotsStrokeColor="@color/white"
         app:dotsCornerRadius="@dimen/_5sdp"
         app:dotsSize="@dimen/_10sdp"
         app:dotsSpacing="@dimen/_2sdp"

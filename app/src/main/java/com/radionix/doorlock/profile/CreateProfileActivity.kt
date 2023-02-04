@@ -2,6 +2,8 @@ package com.radionix.doorlock.profile
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -30,18 +32,21 @@ class CreateProfileActivity : AppCompatActivity() , AuthListener {
         binding.executePendingBindings()
 
         mainViewModel.authListener = this
-        mainViewModel.reqCode = reqCode
 
-        if(reqCode == 101)
-        {
-            binding.addProfile.text = "Verify"
+
+        binding.eye.setOnCheckedChangeListener { _, isChecked ->
+            if(isChecked){
+                binding.password.transformationMethod = HideReturnsTransformationMethod.getInstance()
+            }else{
+                binding.password.transformationMethod = PasswordTransformationMethod.getInstance()
+            }
         }
 
     }
 
     override fun onStarted() {
 
-        binding.addProfile.visibility = View.GONE
+        binding.addProfile.visibility = View.INVISIBLE
         binding.progressBar.visibility = View.VISIBLE
 
     }

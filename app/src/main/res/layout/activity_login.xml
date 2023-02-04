@@ -12,139 +12,488 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/bg1"
         tools:context=".profile.LoginActivity">
 
-        <View
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/label1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_50sdp"
+            android:text="Welcome Back!"
+            android:textColor="@color/white"
+            app:fontFamily="@font/alata"
+            android:textSize="@dimen/_20sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/label2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:text="Please sign in to your account"
+            android:textColor="@color/editText"
+            app:fontFamily="@font/alata"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label1" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/emailId"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="@color/ap_color"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintHeight_percent=".6"
+            android:layout_height="wrap_content"
+            android:hint="Email Address"
+            android:inputType="textEmailAddress"
+            android:text="@={viewModel.email}"
+            android:textColorHint="@color/editText"
+            android:textColor="@color/white"
+            app:fontFamily="@font/alata"
+            android:paddingStart="@dimen/_20sdp"
+            android:background="@drawable/bgnew_editext"
+            app:layout_constraintTop_toBottomOf="@id/label2"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            />
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            app:fontFamily="@font/alata"
+            android:inputType="textPassword"
+            android:text="@={viewModel.password}"
+            android:textColorHint="@color/editText"
+            android:paddingStart="@dimen/_20sdp"
+            android:textColor="@color/white"
+            android:background="@drawable/bgnew_editext"
+            app:layout_constraintTop_toBottomOf="@id/emailId"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            />
+
+        <androidx.appcompat.widget.AppCompatToggleButton
+            android:id="@+id/eye"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:textOn=""
+            android:textOff=""
+            android:background="@drawable/password_eye"
+            android:layout_marginEnd="@dimen/_20sdp"
+            app:layout_constraintEnd_toEndOf="@id/password"
+            app:layout_constraintTop_toTopOf="@id/password"
+            app:layout_constraintBottom_toBottomOf="@id/password"
             />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/create"
+            android:id="@+id/forgetPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="@string/login"
-            android:textColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/password"
+            app:layout_constraintEnd_toEndOf="@id/password"
+            android:text="Forget password?"
             android:textStyle="bold"
-            android:textSize="@dimen/_28sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/cardView"
+            android:textColor="@color/editText"
+            android:textSize="@dimen/_12sdp"
+            android:fontFamily="@font/alata"
+            android:layout_marginTop="@dimen/_10sdp"
             />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardView"
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/addProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_20sdp"
-            app:cardCornerRadius="@dimen/_5sdp"
-            app:cardElevation="@dimen/_10sdp"
+            android:text="Sign In"
+            android:onClick="@{(v)->viewModel.signIn(v)}"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:fontFamily="@font/alata"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:background="@drawable/bg_button"
+            android:layout_marginBottom="@dimen/_20sdp"
+            app:layout_constraintBottom_toTopOf="@id/label3"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
+            />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:indeterminateTint="@color/ap_color"
+            app:layout_constraintTop_toTopOf="@id/addProfile"
+            app:layout_constraintBottom_toBottomOf="@id/addProfile"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/label3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="Don't have an Account?"
+            android:fontFamily="@font/alata"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="@dimen/_30sdp"
+            android:layout_marginStart="@dimen/_30sdp"
+            android:layout_marginEnd="@dimen/_30sdp"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/btncolor"
+            android:text=" Sign Up"
+            android:onClick="@{(v)->viewModel.register(v)}"
+            android:fontFamily="@font/alata"
+            app:layout_constraintStart_toEndOf="@id/label3"
+            app:layout_constraintBottom_toBottomOf="@id/label3"
+            />
+
+
+
+        <!--    <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_180sdp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="@drawable/top_background">
+            </View>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SKELTA"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_marginTop="@dimen/_24sdp"
+                android:textSize="@dimen/_30sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/view"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:layout_marginTop="@dimen/_50sdp"
+                app:cardElevation="@dimen/_21sdp"
+                app:cardCornerRadius="@dimen/_10sdp"
+                app:layout_constraintStart_toStartOf="@id/cardView"
+                app:layout_constraintEnd_toEndOf="@id/cardView"
+                app:layout_constraintTop_toTopOf="@id/cardView"
+                app:layout_constraintBottom_toTopOf="@id/cardView"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/ic_app_icon"
+                        android:scaleType="fitXY"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_app_icon"
+                    />
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_50sdp"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                app:cardElevation="@dimen/_20sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent">
+                app:layout_constraintTop_toBottomOf="@id/text"
+                >
 
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/emailId"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/enter_email_address"
-                    android:drawableStart="@drawable/ic_email"
-                    android:drawablePadding="@dimen/_10sdp"
-                    android:inputType="textEmailAddress"
-                    android:text="@={viewModel.email}"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginTop="@dimen/_16sdp"
-                    android:layout_marginStart="@dimen/_16sdp"
-                    android:layout_marginEnd="@dimen/_16sdp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    />
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/mobileNo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/enter_mobile_number"
-                    android:inputType="number"
-                    android:drawablePadding="@dimen/_10sdp"
-                    android:drawableStart="@drawable/ic_call"
-                    android:text="@={viewModel.mobile}"
-                    app:layout_constraintTop_toBottomOf="@id/emailId"
-                    android:layout_marginTop="@dimen/_20sdp"
-                    android:layout_marginStart="@dimen/_16sdp"
-                    android:layout_marginEnd="@dimen/_16sdp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    />
+                    android:layout_height="wrap_content">
 
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/addProfile"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/_30sdp"
-                    android:text="@string/login"
-                    android:onClick="@{(v)->viewModel.signIn(v)}"
-                    android:textColor="@color/white"
-                    android:textAllCaps="true"
-                    android:paddingStart="@dimen/_5sdp"
-                    android:paddingEnd="@dimen/_5sdp"
-                    android:background="@drawable/bg_button"
-                    android:layout_marginTop="@dimen/_30sdp"
-                    app:layout_constraintTop_toBottomOf="@id/mobileNo"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    />
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/emailId"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/enter_email_address"
+                        android:drawableStart="@drawable/ic_email"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:inputType="textEmailAddress"
+                        android:text="@={viewModel.email}"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginTop="@dimen/_50sdp"
+                        android:layout_marginStart="@dimen/_16sdp"
+                        android:layout_marginEnd="@dimen/_16sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        />
 
-                <ProgressBar
-                    android:id="@+id/progress_bar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:indeterminateTint="@color/ap_color"
-                    android:layout_marginTop="@dimen/_30sdp"
-                    app:layout_constraintTop_toBottomOf="@id/mobileNo"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    />
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/mobileNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/enter_password"
+                        android:inputType="numberPassword"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:drawableStart="@drawable/ic_password"
+                        android:text="@={viewModel.mobile}"
+                        app:layout_constraintTop_toBottomOf="@id/emailId"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:layout_marginStart="@dimen/_16sdp"
+                        android:layout_marginEnd="@dimen/_16sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/login"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_10sdp"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_14sdp"
-                    android:onClick="@{(v)->viewModel.register(v)}"
-                    android:text="@string/new_user_signup_here"
-                    app:layout_constraintTop_toBottomOf="@id/addProfile"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/forgetPassword"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/mobileNo"
+                        app:layout_constraintStart_toStartOf="@id/mobileNo"
+                        android:text="Forget password?"
+                        android:textStyle="bold"
+                        android:textColor="@color/primary"
+                        android:textSize="@dimen/_12sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/addProfile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_30sdp"
+                        android:text="@string/login"
+                        android:onClick="@{(v)->viewModel.signIn(v)}"
+                        android:textColor="@color/white"
+                        android:textAllCaps="true"
+                        android:paddingStart="@dimen/_5sdp"
+                        android:paddingEnd="@dimen/_5sdp"
+                        android:background="@drawable/bg_button"
+                        android:layout_marginTop="@dimen/_30sdp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginBottom="@dimen/_30sdp"
+                        app:layout_constraintTop_toBottomOf="@id/forgetPassword"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:indeterminateTint="@color/ap_color"
+                        app:layout_constraintTop_toTopOf="@id/addProfile"
+                        app:layout_constraintBottom_toBottomOf="@id/addProfile"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        />
 
 
 
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        </androidx.cardview.widget.CardView>
 
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/_30sdp"
+                android:paddingEnd="@dimen/_40sdp"
+                android:textAllCaps="false"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:background="@drawable/bg_text"
+                android:onClick="@{(v)->viewModel.register(v)}"
+                android:text="@string/new_user_signup_here"
+                app:layout_constraintTop_toBottomOf="@id/cardView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                app:lottie_fileName="arrow_right.json"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                android:paddingEnd="@dimen/_5sdp"
+                app:layout_constraintTop_toBottomOf="@id/cardView"
+                app:layout_constraintEnd_toEndOf="@id/login"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />-->
+
+
+
+
+    <!--  <View
+          android:layout_width="match_parent"
+          android:layout_height="0dp"
+          android:background="@color/ap_color"
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintHeight_percent=".6"
+          />
+
+      <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/create"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          android:text="@string/login"
+          android:textColor="@color/white"
+          android:textStyle="bold"
+          android:textSize="@dimen/_28sdp"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintBottom_toTopOf="@id/cardView"
+          />
+
+      <androidx.cardview.widget.CardView
+          android:id="@+id/cardView"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="@dimen/_20sdp"
+          app:cardCornerRadius="@dimen/_5sdp"
+          app:cardElevation="@dimen/_10sdp"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintBottom_toBottomOf="parent">
+
+          <androidx.constraintlayout.widget.ConstraintLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintTop_toTopOf="parent"
+              app:layout_constraintBottom_toBottomOf="parent">
+
+
+              <androidx.appcompat.widget.AppCompatEditText
+                  android:id="@+id/emailId"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:hint="@string/enter_email_address"
+                  android:drawableStart="@drawable/ic_email"
+                  android:drawablePadding="@dimen/_10sdp"
+                  android:inputType="textEmailAddress"
+                  android:text="@={viewModel.email}"
+                  app:layout_constraintTop_toTopOf="parent"
+                  android:layout_marginTop="@dimen/_16sdp"
+                  android:layout_marginStart="@dimen/_16sdp"
+                  android:layout_marginEnd="@dimen/_16sdp"
+                  app:layout_constraintStart_toStartOf="parent"
+                  app:layout_constraintEnd_toEndOf="parent"
+                  />
+
+              <androidx.appcompat.widget.AppCompatEditText
+                  android:id="@+id/mobileNo"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:hint="@string/enter_mobile_number"
+                  android:inputType="number"
+                  android:drawablePadding="@dimen/_10sdp"
+                  android:drawableStart="@drawable/ic_call"
+                  android:text="@={viewModel.mobile}"
+                  app:layout_constraintTop_toBottomOf="@id/emailId"
+                  android:layout_marginTop="@dimen/_20sdp"
+                  android:layout_marginStart="@dimen/_16sdp"
+                  android:layout_marginEnd="@dimen/_16sdp"
+                  app:layout_constraintStart_toStartOf="parent"
+                  app:layout_constraintEnd_toEndOf="parent"
+                  />
+
+
+              <androidx.appcompat.widget.AppCompatButton
+                  android:id="@+id/addProfile"
+                  android:layout_width="wrap_content"
+                  android:layout_height="@dimen/_30sdp"
+                  android:text="@string/login"
+                  android:onClick="@{(v)->viewModel.signIn(v)}"
+                  android:textColor="@color/white"
+                  android:textAllCaps="true"
+                  android:paddingStart="@dimen/_5sdp"
+                  android:paddingEnd="@dimen/_5sdp"
+                  android:background="@drawable/bg_button"
+                  android:layout_marginTop="@dimen/_30sdp"
+                  app:layout_constraintTop_toBottomOf="@id/mobileNo"
+                  app:layout_constraintStart_toStartOf="parent"
+                  app:layout_constraintEnd_toEndOf="parent"
+                  />
+
+              <ProgressBar
+                  android:id="@+id/progress_bar"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:visibility="gone"
+                  android:indeterminateTint="@color/ap_color"
+                  android:layout_marginTop="@dimen/_30sdp"
+                  app:layout_constraintTop_toBottomOf="@id/mobileNo"
+                  app:layout_constraintStart_toStartOf="parent"
+                  app:layout_constraintEnd_toEndOf="parent"
+                  />
+
+              <androidx.appcompat.widget.AppCompatTextView
+                  android:id="@+id/login"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="@dimen/_10sdp"
+                  android:layout_marginBottom="@dimen/_10sdp"
+                  android:textColor="@color/black"
+                  android:textSize="@dimen/_14sdp"
+                  android:onClick="@{(v)->viewModel.register(v)}"
+                  android:text="@string/new_user_signup_here"
+                  app:layout_constraintTop_toBottomOf="@id/addProfile"
+                  app:layout_constraintStart_toStartOf="parent"
+                  app:layout_constraintEnd_toEndOf="parent"
+                  app:layout_constraintBottom_toBottomOf="parent"
+                  />
+
+
+
+
+          </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+      </androidx.cardview.widget.CardView>
+-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

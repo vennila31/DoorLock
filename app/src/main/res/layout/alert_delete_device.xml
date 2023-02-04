@@ -1,6 +1,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:background="@color/edit"
     android:layout_height="wrap_content">
 
     <TextView
@@ -9,9 +10,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_16sdp"
         android:text="@string/delete_device"
+        android:fontFamily="@font/alata"
         android:textSize="@dimen/_16sdp"
         android:textStyle="bold"
-        android:textColor="@color/black"
+        android:textColor="@color/ap_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -21,10 +23,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_16sdp"
+        android:fontFamily="@font/alata"
         android:text="@string/Tag2"
-        android:backgroundTint="@color/black"
+        android:backgroundTint="@color/white"
         android:padding="@dimen/_5sdp"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="@dimen/_12sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,11 +37,12 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/save"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_16sdp"
         android:background="@drawable/bg_button"
         android:text="Yes, Delete it"
+        android:fontFamily="@font/alata"
         android:paddingStart="@dimen/_10sdp"
         android:paddingEnd="@dimen/_10sdp"
         android:singleLine="true"

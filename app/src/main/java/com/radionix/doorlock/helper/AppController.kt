@@ -9,15 +9,15 @@ class AppController(context : Context) {
         Context.MODE_PRIVATE)
     private val editor : SharedPreferences.Editor = sharedPreferences.edit()
 
-    fun putFingerPrint(yes : Boolean){
+    fun putUid(uid : String){
         sharedPreferences.edit()
-            .putBoolean("fingerPrint",yes)
+            .putString("uid",uid)
             .apply()
     }
 
-    fun getFingerPrint(): Boolean{
+    fun getUid(): String{
 
-        return sharedPreferences.getBoolean("fingerPrint",false)
+        return sharedPreferences.getString("uid","").toString()
     }
     fun putIsOkProduct(yes : Boolean){
 
@@ -62,6 +62,17 @@ class AppController(context : Context) {
     fun getMobile() : String{
 
         return sharedPreferences.getString("mobile","").toString()
+    }
+
+    fun putPass(mobile : String){
+        editor.putString("password",mobile)
+        editor.apply()
+        editor.commit()
+    }
+
+    fun getPass() : String{
+
+        return sharedPreferences.getString("password","").toString()
     }
 
 }

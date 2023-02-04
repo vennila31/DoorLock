@@ -21,10 +21,10 @@ class IntroActivity : AppCompatActivity() {
         viewPager.adapter = adapter
         wormDotsIndicator.setViewPager(viewPager)
 
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
+       /* val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.title = "Device Configuration"
+        supportActionBar!!.title = "Device Configuration"*/
 
         val next = findViewById<AppCompatButton>(R.id.next)
 
@@ -37,8 +37,8 @@ class IntroActivity : AppCompatActivity() {
         }
     }
 
-    override fun onSupportNavigateUp(): Boolean {
+   /* override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
-    }
+    }*/
 }
